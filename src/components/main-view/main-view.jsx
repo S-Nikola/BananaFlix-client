@@ -1,37 +1,40 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-        id: 1,
-        title: "Arrival",
-        director: "Denis Villeneuve",
-        ImageURL:"https://upload.wikimedia.org/wikipedia/en/d/df/Arrival%2C_Movie_Poster.jpg",
-      },
-      {
-        id: 2,
-        title: "The Lord of the Rings: Fellowship of the Ring",
-        director:"Peter Jackson",
-        ImageURL:"https://upload.wikimedia.org/wikipedia/en/8/8a/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg",
-      },
-      {
-        id: 3,
-        title: "Before the Rain",
-        director:"Milcho Manchevski",
-        ImageURL:"https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Beforetherain.jpg/220px-Beforetherain.jpg",
-      },
-      {
-        id: 4,
-        title: "Schindler's List",
-        director:"Steven Spielberg",
-        ImageURL:"https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg",
-      }
-  ]);
+  const [movies, setMovies] = useState([]);
 
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  // useEffect(() => {
+  //   fetch("https://movie-api-8cvs.onrender.com/movies")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const moviesFromApi = data.map((movie) => {
+  //         return {
+  //           id: movie._id,
+  //           title: movie.Title,
+  //           director: movie.Director
+  //         };
+  //       });
+  //       console.log("movies from api:", data);
+  //       setMovies(moviesFromApi);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    fetch("https://movie-api-8cvs.onrender.com/movies")
+      .then((response) => response.json())
+      .then((data) => {
+        const moviesFromApi = data.map(movie => {
+          const obj = { id: movie._id, title: movie.Title, image: movie.ImageURL, genre: movie.Genre, director: movie.Director}
+          return obj;
+        });
+        console.log("movies from api:", data);
+        setMovies(moviesFromApi);
+      });
+  }, []);
 
   if (selectedMovie) {
     return (
