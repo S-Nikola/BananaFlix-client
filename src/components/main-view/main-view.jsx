@@ -28,7 +28,7 @@ export const MainView = () => {
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map(movie => {
-          const obj = { id: movie._id, title: movie.Title, image: movie.ImageURL, genre: movie.Genre, director: movie.Director}
+          const obj = { id: movie._id, title: movie.Title, description: movie.Description, image: movie.ImageURL, genre: movie.Genre, director: movie.Director}
           return obj;
         });
         console.log("movies from api:", data);

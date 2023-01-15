@@ -12,11 +12,11 @@ export const MovieCard = ({ movie, onMovieClick }) => {
     );
   };
   
-  // MovieCard.propTypes = {
-  //   movie: PropTypes.shape({
-  //     title: PropTypes.string,
-  //     image: PropTypes.string,
-  //     director: PropTypes.string
-  //   }).isRequired,
-  //   onMovieClick: PropTypes.func.isRequired
-  // };
+  MovieCard.propTypes = {
+    movie: PropTypes.shape({
+      title: PropTypes.string,
+      image: PropTypes.string,
+      // director: PropTypes.string
+    }).isRequired,
+    onMovieClick: PropTypes.func.isRequired
+  };
