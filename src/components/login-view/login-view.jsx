@@ -13,12 +13,11 @@ export const LoginView = ({ onLoggedIn }) => {
       secret: password
     };
 
-    fetch("https://movie-api-8cvs.onrender.com/login", {
+    fetch(`https://movie-api-8cvs.onrender.com/login?Username=${username}&Password=${password}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      }
     })
     .then((response) => response.json())
     .then((data) => {
