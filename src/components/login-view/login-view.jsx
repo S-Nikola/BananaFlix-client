@@ -16,12 +16,11 @@ export const LoginView = ({ onLoggedIn }) => {
       secret: password
     };
 
-    fetch("https://movie-api-8cvs.onrender.com/login", {
+    fetch(`https://movie-api-8cvs.onrender.com/login?Username=${username}&Password=${password}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      }
     })
     .then((response) => response.json())
     .then((data) => {
@@ -41,7 +40,7 @@ export const LoginView = ({ onLoggedIn }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formUsername">
+      <Form.Group controlId="LoginformUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control
           type="text"
@@ -52,7 +51,7 @@ export const LoginView = ({ onLoggedIn }) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formPassword">
+      <Form.Group controlId="LoginformPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control
           type="password"
