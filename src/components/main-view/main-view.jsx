@@ -73,7 +73,7 @@ export const MainView = () => {
             />
             </Col>
           ))}
-          <Button
+          <Button className="mb-3"
         onClick={() => {
           setUser(null);
           setToken(null);
