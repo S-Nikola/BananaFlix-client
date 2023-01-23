@@ -9,7 +9,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
@@ -17,6 +16,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser? storedUser : null);
   const [token, setToken] = useState(storedToken? storedToken : null);
 
+  console.log(user)
   useEffect(() => {
     if (!token) {
     console.log("No token")
@@ -86,21 +86,21 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} />
+                    <MovieView movies={movies} username={user.Username} token={token}/>
                   </Col>
                 )}
               </>
             }
           />
-          <Route 
-            path= "/profile"
+          <Route
+            path="/profile"
             element={
               <>
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : (
-                  <Col md={8}>
-                    <ProfileView />
+                  <Col>
+                    <ProfileView user={user} movies={movies} />
                   </Col>
                 )}
               </>
