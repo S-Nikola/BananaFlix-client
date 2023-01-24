@@ -78,7 +78,7 @@ export const SignupView = ({ onLoggedIn }) => {
           required
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button className= "mt-3" variant="primary" type="submit">
       Sign Up
       </Button>
     </Form>

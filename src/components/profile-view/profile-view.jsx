@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
-import { Button, Container, Form, Row, Col, } from "react-bootstrap";
-
+import { Button, Container, Form, Row, Col, Card } from "react-bootstrap";
 
 export const ProfileView = ({ user, movies }) => {
 
@@ -96,26 +95,24 @@ export const ProfileView = ({ user, movies }) => {
     
   return (
     <Container>
-        <Row>
-          <Col>
-          <div>
-            <p>Username: {Username}</p>
-            <p>Birthday: {Birthday}</p>
-            <p>Email: {Email}</p>
-            <p>Favorite movies:</p>
-            {/* Display favorite movies */}
-            {FavoriteMovies.length === 0 ?
-              <span>No movies selected</span> : filteredMovies.map ((movie) => (
-              <Col className="mb-4" key={movie.id} md={8}>
-                <MovieCard movie={movie} />
-              </Col>
-              ))
-            }
-          </div>
-          </Col>
-          <Col>
+      <Row className= "mb-4">
+        <Col>
+          <Card>
+            <Card.Body>
+              <div>
+                <h4>User Details</h4>
+                <p>Username: {Username}</p>
+                <p>Birthday: {Birthday}</p>
+                <p>Email: {Email}</p>
+              </div> 
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col >
+          <Card>
+            <Card.Body>
+              <h4>Update Profile Information</h4>
             <Form onSubmit={handleSubmit}>
-              <h2>Update info</h2>
               <Form.Group>
                 <Form.Label>Username: </Form.Label>
                 <Form.Control
@@ -140,10 +137,25 @@ export const ProfileView = ({ user, movies }) => {
                 onChange={e => setEmail(e.target.value)} 
                 />
               </Form.Group>
-              <Button type="submit" className="button-primary">Save Changes</Button>
+              <Button type="submit" className="button-primary mt-3">Save Changes</Button>
             </Form>
             {/* <Button onClick={() => handleDeregister(user._id)} className="button-delete" type="submit" variant="danger" >Delete Account</Button> */}
-          </Col>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <h4>Favorite movies:</h4>
+          <>
+             {/* Display favorite movies */}
+             {FavoriteMovies.length === 0 ?
+              <span>No movies selected</span> : filteredMovies.map ((movie) => (
+              <Col className="mb-4" key={movie.id} xs={12} md={6} lg={3}>
+                <MovieCard movie={movie} />
+              </Col>
+              ))
+            }
+          </>
         </Row>
     </Container>
   )
