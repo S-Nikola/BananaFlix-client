@@ -33,6 +33,7 @@ export const MainView = () => {
         });
         console.log("movies from api:", data);
         setMovies(moviesFromApi);
+        localStorage.setItem("movies", JSON.stringify(moviesFromApi))
       });
   }, [token]);
 
@@ -86,7 +87,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} username={user.Username} token={token}/>
+                    <MovieView movies={movies} username={user.Username} favoriteMovies={user.FavoriteMovies}/>
                   </Col>
                 )}
               </>

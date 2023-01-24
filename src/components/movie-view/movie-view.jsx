@@ -2,22 +2,32 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
 import "./movie-view.scss";
+import { useState } from "react";
 
-export const MovieView = ({ movies, username, token }) => {
+export const MovieView = ({ movies, username, favoriteMovies }) => {
   const { movieId } = useParams();
+  const storedToken = localStorage.getItem("token");
+  const storedUser = JSON.parse(localStorage.getItem("user"));
   const movie = movies.find((m) => m.id === movieId);
+  
+  const [userFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
+
 console.log(username)
 
+useState()
 // AddFavMovie
 const addFavoriteMovie = async() => {
   const favoriteMovie = await fetch(`https://movie-api-8cvs.onrender.com/users/${username}/movies/${movieId}`,
     {
       method: "POST",
       headers: { 
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storedToken}`,
       "Content-Type": "application/json", 
       }
      })
+
+      console.log(storedToken)
+      movieAdded();
 
     const response = await favoriteMovie.json()
      console.log(response)
@@ -27,16 +37,16 @@ const addFavoriteMovie = async() => {
     } 
   }
 
-  const removeFavorite = async() => {
-    const removeFavorite = await fetch (`https://movie-api-8cvs.onrender.com/users/${username}/movies/${movieId}`,
+  const removeFavoriteMovie = async() => {
+    const favoriteMovie = await fetch (`https://movie-api-8cvs.onrender.com/users/${username}/movies/${movieId}`,
     {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storedToken}`,
         "Content-Type": "application/json"
       }
     })     
-    const response = await removeFavorite.json()
+    const response = await favoriteMovie.json()
     console.log(response)
     if (response.ok) {
      localStorage.removeItem("user")
@@ -44,13 +54,19 @@ const addFavoriteMovie = async() => {
    } 
   };
 
-    // const movieAdded = () => {
-    //   if (favoriteMovie.find((m) => m.id === movieId)) {
-    //     return Boolean
-    //   } else {
-    //     return Boolean
-    //   }
-    // };
+    const movieAdded = () => {
+      const movieExists = userFavoriteMovies.some((m) => m === movieId)
+      console.log("movieExists", movieExists)
+      console.log("userFavMov", userFavoriteMovies)
+      console.log("movieId", movieId)
+      return movieExists
+      // if (movieExists) {
+      //   console.log("majka ti")
+      //   return true
+      // } else {
+      //   return false
+      // }
+    };
   
 
     return (
@@ -74,7 +90,7 @@ const addFavoriteMovie = async() => {
         <Button 
           className="button-add-favorite"
           onClick={addFavoriteMovie}
-          // disabled={movieAdded}
+          disabled={movieAdded()}
         >
           + Add to Favorites
         </Button>
@@ -82,7 +98,7 @@ const addFavoriteMovie = async() => {
         <br/>
         <Button 
           variant="danger"
-          onClick={removeFavorite}
+          onClick={removeFavoriteMovie}
         >
           Remove from Favorites
         </Button> 

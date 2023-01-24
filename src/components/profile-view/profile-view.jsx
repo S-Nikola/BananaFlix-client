@@ -1,36 +1,3 @@
-// import { useState, useEffect } from "react";
-// import { MovieCard } from "../movie-card/movie-card";
-// import { Button, Form, Row, Col, } from "react-bootstrap";
-
-
-// export const ProfileView = ({user, moviesList}) => {
-//     console.log(user)
-//     const {Username, Brithday, Email, FavoriteMovies} = user;
-//     const [filteredMovies, setFilteredMovies] = useState([]);
-//     // console.log(moviesList)
-
-//     useEffect (() => {
-//         const newList = moviesList.filter((movie)=> {
-//             const hasMovieId = FavoriteMovies.some((m)=> movie.id === m);
-//             if (hasMovieId) {
-//                 return movie
-//             }
-//         })
-//         setFilteredMovies (newList)
-//     },[])
-
-  // return (
-  //   <div>
-  //       <p>{Username}</p>
-  //       {FavoriteMovies.length === 0 ?
-  //       <span>No movies selected</span> : filteredMovies.map ((movie) => (
-  //           <Col className="mb-4" key={movie.id} md={3}><MovieCard movie={movie} /></Col>
-  //           ))
-  //       }
-  //   </div>
-  // )
-
-// };
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { Button, Container, Form, Row, Col, } from "react-bootstrap";
@@ -39,10 +6,16 @@ import { Button, Container, Form, Row, Col, } from "react-bootstrap";
 export const ProfileView = ({ user, movies }) => {
 
     const storedToken = localStorage.getItem("token");
-    const [token] = useState(storedToken ? storedToken : null);
-
-    const {Username, Birthday, Email, FavoriteMovies} = user;
+    const storedMovies = JSON.parse(localStorage.getItem("movies"))
+    // const storedFavorites = JSON.parse(localStorage.getItem("user")).FavoriteMovies
     const storedUser = localStorage.getItem("user");
+    const {Username, Birthday, Email, FavoriteMovies} = user;
+    const [token] = useState(storedToken ? storedToken : null);
+    const [allMovies] = useState(storedMovies ? storedMovies: movies);
+    const [userFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);
+
+    
+    
     // const [user, setUser] = useState(storedUser ? storedUser : null);
 
     const [username, setUsername] = useState('');
@@ -54,8 +27,8 @@ export const ProfileView = ({ user, movies }) => {
 
 // Filter favorite movies for later display
     useEffect (() => {
-      const newList = movies.filter((movie)=> {
-          const hasMovieId = FavoriteMovies.some((m)=> movie.id === m);
+      const newList = allMovies.filter((movie)=> {
+          const hasMovieId = userFavoriteMovies.some((m)=> movie.id === m);
           if (hasMovieId) {
               return movie
           }
@@ -63,9 +36,7 @@ export const ProfileView = ({ user, movies }) => {
       setFilteredMovies (newList)
   },[])
 
-  console.log(user)
-
-
+  console.log("movies", movies)
     
   return (
         <Row>
