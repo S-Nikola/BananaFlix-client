@@ -13,9 +13,6 @@ export const ProfileView = ({ user, movies }) => {
     const [token] = useState(storedToken ? storedToken : null);
     const [allMovies] = useState(storedMovies ? storedMovies: movies);
     const [userFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);
-
-    
-    
     // const [user, setUser] = useState(storedUser ? storedUser : null);
 
     const [username, setUsername] = useState('');
@@ -36,9 +33,69 @@ export const ProfileView = ({ user, movies }) => {
       setFilteredMovies (newList)
   },[])
 
-  console.log("movies", movies)
+  // console.log("movies", movies)
+
+    // console.log("movies", movies)
+
+  const updateUser = (user) => {
+        fetch(`https://movie-api-8cvs.onrender.com/users/${username}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setUser(data.user);
+            localStorage.setItem("user", JSON.stringify(data.user));
+          });
+    };
+    
+  const handleSubmit = (event) => {
+    event.preventDefault();  
+
+    const data = {
+      Username: username,
+      Password: password,
+      Email: email,
+    };
+
+    fetch(`https://movie-api-8cvs.onrender.com/users/${username}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"},
+    })
+    .then((response) => response.json())
+      .then((data) => {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+      if (response.ok) {
+        alert("Changes saved");
+        updateUser(user);
+      } else {
+        alert("Something went wrong");
+      }
+    });
+  };
+
+  // const handleDeregister = () => {
+
+  //   fetch(`https://movie-api-8cvs.onrender.com/users/${username}` {
+  //     method: "DELETE",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       "Content-Type": "application/json"
+  //     }
+  //   }).then((response) => {
+  //     if (response.ok) {
+  //       alert("Account successfully deleted");
+  //     } else {
+  //       alert("Something went wrong");
+  //     }
+  //   });
+  // };
     
   return (
+    <Container>
         <Row>
           <Col>
           <div>
@@ -57,8 +114,7 @@ export const ProfileView = ({ user, movies }) => {
           </div>
           </Col>
           <Col>
-            <Form>
-            {/* <Form onSubmit={handleSubmit}> */}
+            <Form onSubmit={handleSubmit}>
               <h2>Update info</h2>
               <Form.Group>
                 <Form.Label>Username: </Form.Label>
@@ -89,6 +145,7 @@ export const ProfileView = ({ user, movies }) => {
             {/* <Button onClick={() => handleDeregister(user._id)} className="button-delete" type="submit" variant="danger" >Delete Account</Button> */}
           </Col>
         </Row>
+    </Container>
   )
 };
 
