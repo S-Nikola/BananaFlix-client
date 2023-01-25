@@ -6,75 +6,86 @@ export const ProfileView = ({ user, movies }) => {
 
     const storedToken = localStorage.getItem("token");
     const storedMovies = JSON.parse(localStorage.getItem("movies"))
-    // const storedFavorites = JSON.parse(localStorage.getItem("user")).FavoriteMovies
     const storedUser = localStorage.getItem("user");
     const {Username, Birthday, Email, FavoriteMovies} = user;
     const [token] = useState(storedToken ? storedToken : null);
-    const [allMovies] = useState(storedMovies ? storedMovies: movies);
-    const [userFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);
-    // const [user, setUser] = useState(storedUser ? storedUser : null);
+    const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);
+    // const [updatedUser, setUpdatedUser] = useState(storedUser ? storedUser : null);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [birthday, setBirthday] = useState("");
 
+    const [allMovies] = useState(storedMovies ? storedMovies: movies);
     const [filteredMovies, setFilteredMovies] = useState([]);
 
+// Show updated user on the profile
+const getUser = (token) => {
+  fetch(`https://movie-api-8cvs.onrender.com/users/${Username}`,{
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}`},
+  }).then(response => response.json())
+  .then((response) => {
+    console.log(response)
+    setUsername(response.Username);
+    setEmail(response.Email);
+    setPassword(response.Password);
+    setBirthday(response.Birthday);
+    setUserFavoriteMovies(response.FavoriteMovies)
+  })
+}
+
+useEffect(()=> {
+  getUser(token);
+},[])
 
 // Filter favorite movies for later display
     useEffect (() => {
       const newList = allMovies.filter((movie)=> {
-          const hasMovieId = userFavoriteMovies.some((m)=> movie.id === m);
+          const hasMovieId = user.FavoriteMovies.some((m)=> movie.id === m);
           if (hasMovieId) {
               return movie
           }
       })
       setFilteredMovies (newList)
   },[])
-
-  // console.log("movies", movies)
-
-    // console.log("movies", movies)
-
-  const updateUser = (user) => {
-        fetch(`https://movie-api-8cvs.onrender.com/users/${username}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            setUser(data.user);
-            localStorage.setItem("user", JSON.stringify(data.user));
-          });
-    };
     
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();  
 
-    const data = {
-      Username: username,
-      Password: password,
-      Email: email,
-    };
+//     const data = {
+//       Username: username,
+//       Password: password,
+//       Email: email,
+//       Birthday: birthday
+//     };
+// console.log(data)
+//     const updateUser = await fetch(`https://movie-api-8cvs.onrender.com/users/${user.Username}`, {
+//       method: "PUT",
+//       body: JSON.stringify(data),
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json"},
+//     })
 
-    fetch(`https://movie-api-8cvs.onrender.com/users/${username}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"},
-    })
-    .then((response) => response.json())
-      .then((data) => {
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
-      if (response.ok) {
-        alert("Changes saved");
-        updateUser(user);
-      } else {
-        alert("Something went wrong");
-      }
-    });
+//     const response = await updateUser.json()
+//     console.log(response)
+//     // .then((response) => response.json())
+//     //   .then((data) => {
+//     //     console.log(data)
+//     //     // setUpdatedUser(data.user);
+//     //     // localStorage.setItem("user", JSON.stringify(data.user));
+//     //   if (data.ok) {
+//     //     console.log(response)
+//     //     alert("Changes saved");
+//     //     // updateUser(user);
+//     //   } else {
+//     //     alert("Something went wrong");
+//     //   }
+//     // });
   };
+
 
   // const handleDeregister = () => {
 
@@ -112,7 +123,7 @@ export const ProfileView = ({ user, movies }) => {
           <Card>
             <Card.Body>
               <h4>Update Profile Information</h4>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={(e) => handleSubmit(e)}>
               <Form.Group>
                 <Form.Label>Username: </Form.Label>
                 <Form.Control
@@ -135,6 +146,14 @@ export const ProfileView = ({ user, movies }) => {
                 type="text" 
                 value={email} 
                 onChange={e => setEmail(e.target.value)} 
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Birthday: </Form.Label>
+                <Form.Control 
+                type="date" 
+                value={birthday} 
+                onChange={e => setBirthday(e.target.value)} 
                 />
               </Form.Group>
               <Button type="submit" className="button-primary mt-3">Save Changes</Button>

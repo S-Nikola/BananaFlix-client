@@ -31,7 +31,6 @@ export const MainView = () => {
           const obj = { id: movie._id, title: movie.Title, description: movie.Description, image: movie.ImageURL, genre: movie.Genre, director: movie.Director}
           return obj;
         });
-        console.log("movies from api:", data);
         setMovies(moviesFromApi);
         localStorage.setItem("movies", JSON.stringify(moviesFromApi))
       });

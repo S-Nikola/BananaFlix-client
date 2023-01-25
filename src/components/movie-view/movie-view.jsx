@@ -10,11 +10,11 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const movie = movies.find((m) => m.id === movieId);
   
-  const [userFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
+  const [userFavoriteMovies, setFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
 
 console.log(username)
 
-useState()
+// useState()
 // AddFavMovie
 const addFavoriteMovie = async() => {
   const favoriteMovie = await fetch(`https://movie-api-8cvs.onrender.com/users/${username}/movies/${movieId}`,
@@ -27,12 +27,11 @@ const addFavoriteMovie = async() => {
      })
 
       console.log(storedToken)
-      movieAdded();
 
     const response = await favoriteMovie.json()
-     console.log(response)
+    setFavoriteMovies(response.FavoriteMovies)
      if (response.ok) {
-      localStorage.removeItem("user")
+      // localStorage.removeItem("user")
       localStorage.setItem("user", JSON.stringify (response))
     } 
   }
@@ -61,7 +60,6 @@ const addFavoriteMovie = async() => {
       console.log("movieId", movieId)
       return movieExists
       // if (movieExists) {
-      //   console.log("majka ti")
       //   return true
       // } else {
       //   return false
