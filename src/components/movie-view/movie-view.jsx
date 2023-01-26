@@ -3,18 +3,19 @@ import { Link } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
 import "./movie-view.scss";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export const MovieView = ({ movies, username, favoriteMovies }) => {
   const { movieId } = useParams();
   const storedToken = localStorage.getItem("token");
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const movie = movies.find((m) => m.id === movieId);
-  
-  const [userFavoriteMovies, setFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
+
+  const [movieExists, setMovieExists] = useState(false)
+  const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
 
 console.log(username)
 
-// useState()
 // AddFavMovie
 const addFavoriteMovie = async() => {
   const favoriteMovie = await fetch(`https://movie-api-8cvs.onrender.com/users/${username}/movies/${movieId}`,
@@ -29,7 +30,7 @@ const addFavoriteMovie = async() => {
       console.log(storedToken)
 
     const response = await favoriteMovie.json()
-    setFavoriteMovies(response.FavoriteMovies)
+    setUserFavoriteMovies(response.FavoriteMovies)
      if (response.ok) {
       // localStorage.removeItem("user")
       localStorage.setItem("user", JSON.stringify (response))
@@ -48,24 +49,22 @@ const addFavoriteMovie = async() => {
     const response = await favoriteMovie.json()
     console.log(response)
     if (response.ok) {
-     localStorage.removeItem("user")
      localStorage.setItem("user", JSON.stringify (response))
    } 
   };
 
     const movieAdded = () => {
-      const movieExists = userFavoriteMovies.some((m) => m === movieId)
-      console.log("movieExists", movieExists)
+      const hasMovie = userFavoriteMovies.some((m) => m === movieId)
       console.log("userFavMov", userFavoriteMovies)
       console.log("movieId", movieId)
-      return movieExists
-      // if (movieExists) {
-      //   return true
-      // } else {
-      //   return false
-      // }
+      if (hasMovie) {
+        setMovieExists(true)
+      }
     };
-  
+console.log("movieExists", movieExists)
+  useEffect (()=> {
+    movieAdded()
+  },[])
 
     return (
       <Row className="movie-view">
@@ -88,7 +87,7 @@ const addFavoriteMovie = async() => {
         <Button 
           className="button-add-favorite"
           onClick={addFavoriteMovie}
-          disabled={movieAdded()}
+          disabled={movieExists}
         >
           + Add to Favorites
         </Button>

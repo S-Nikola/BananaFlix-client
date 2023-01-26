@@ -16,7 +16,6 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser? storedUser : null);
   const [token, setToken] = useState(storedToken? storedToken : null);
 
-  console.log(user)
   useEffect(() => {
     if (!token) {
     console.log("No token")
@@ -100,7 +99,7 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col>
-                    <ProfileView user={user} movies={movies} />
+                    <ProfileView user={user} movies={movies}/>
                   </Col>
                 )}
               </>
