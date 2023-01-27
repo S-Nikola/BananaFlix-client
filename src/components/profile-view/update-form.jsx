@@ -35,6 +35,15 @@ export const UpdateForm = ({ user }) => {
     
         const response = await updateUser.json()
         console.log(response)
+        if (response) {
+          alert("Account successfully updated! Please log in again");
+          localStorage.clear();
+          window.location.reload(); 
+        } else {
+          alert("Something went wrong");
+        }
+
+
         // .then((response) => response.json())
         //   .then((data) => {
         //     console.log(data)
@@ -51,22 +60,24 @@ export const UpdateForm = ({ user }) => {
       };
     
     
-      // const handleDeregister = () => {
+      const handleDeregister = () => {
     
-      //   fetch(`https://movie-api-8cvs.onrender.com/users/${username}` {
-      //     method: "DELETE",
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       "Content-Type": "application/json"
-      //     }
-      //   }).then((response) => {
-      //     if (response.ok) {
-      //       alert("Account successfully deleted");
-      //     } else {
-      //       alert("Something went wrong");
-      //     }
-      //   });
-      // };
+        fetch(`https://movie-api-8cvs.onrender.com/users/${user.Username}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }).then((response) => {
+          if (response.ok) {
+            alert("Account successfully deleted");
+            localStorage.clear();
+            window.location.reload(); 
+          } else {
+            alert("Something went wrong");
+          }
+        });
+      };
         
     return (
       <>
@@ -106,7 +117,7 @@ export const UpdateForm = ({ user }) => {
             </Form.Group>
             <Button type="submit" className="button-primary mt-3">Save Changes</Button>
         </Form>
-        {/* <Button onClick={() => handleDeregister(user._id)} className="button-delete" type="submit" variant="danger" >Delete Account</Button> */}
+        <Button onClick={() => handleDeregister(user._id)} className="button-delete mt-3" type="submit" variant="danger" >Delete Account</Button>
       </>
     )
 }

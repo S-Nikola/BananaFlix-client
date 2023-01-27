@@ -11,8 +11,11 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const movie = movies.find((m) => m.id === movieId);
 
-  const [movieExists, setMovieExists] = useState(false)
+  const [movieExists, setMovieExists] = useState(false);
+  const [disableRemove, setDisableRemove] = useState(true)
   const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
+
+  // const movieRemoved = movieExists.false
 
 console.log(username)
 
@@ -31,10 +34,13 @@ const addFavoriteMovie = async() => {
 
     const response = await favoriteMovie.json()
     setUserFavoriteMovies(response.FavoriteMovies)
-     if (response.ok) {
-      // localStorage.removeItem("user")
-      localStorage.setItem("user", JSON.stringify (response))
-    } 
+     if (response) {
+        alert("Movie added to favorites");
+        localStorage.setItem("user", JSON.stringify (response))
+        window.location.reload(); 
+      } else {
+        alert("Something went wrong");
+      }    
   }
 
   const removeFavoriteMovie = async() => {
@@ -48,9 +54,13 @@ const addFavoriteMovie = async() => {
     })     
     const response = await favoriteMovie.json()
     console.log(response)
-    if (response.ok) {
-     localStorage.setItem("user", JSON.stringify (response))
-   } 
+    if (response) {
+      alert("Movie removed from favorites");
+      localStorage.setItem("user", JSON.stringify (response))
+      window.location.reload(); 
+    } else {
+      alert("Something went wrong");
+    }
   };
 
     const movieAdded = () => {
@@ -61,9 +71,19 @@ const addFavoriteMovie = async() => {
         setMovieExists(true)
       }
     };
+
+    const movieRemoved = () => {
+      const hasMovie = userFavoriteMovies.some((m) => m === movieId)
+      if (hasMovie) {
+        setDisableRemove(false)
+      }
+    };
+
 console.log("movieExists", movieExists)
+
   useEffect (()=> {
     movieAdded()
+    movieRemoved()
   },[])
 
     return (
@@ -96,6 +116,7 @@ console.log("movieExists", movieExists)
         <Button 
           variant="danger"
           onClick={removeFavoriteMovie}
+          disabled={disableRemove}
         >
           Remove from Favorites
         </Button> 

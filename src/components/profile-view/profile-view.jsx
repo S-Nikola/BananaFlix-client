@@ -46,19 +46,7 @@ useEffect(()=> {
   getUser(token);
 },[])
 
-//Filter favorite movies for later display
-// useEffect (() => {
-//   const newList = allMovies.filter((movie)=> {
-//       const hasMovieId = favoriteMovies.some((m)=> movie.id === m);
-//       if (hasMovieId) {
-//           return movie
-//       }
-//   })
-//   setFilteredMovies (newList)
-//   getUser(token);
-// },[])
-
-    
+   
   return (
     <Container>
       <Row className= "mb-4">
