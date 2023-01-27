@@ -6,9 +6,8 @@ export const UpdateForm = ({ user }) => {
     const storedToken = localStorage.getItem("token");
     const storedMovies = JSON.parse(localStorage.getItem("movies"))
     const storedUser = localStorage.getItem("user");
-    // const {Username, Birthday, Email, FavoriteMovies} = user;
+
     const [token] = useState(storedToken ? storedToken : null);
-    // const [updatedUser, setUpdatedUser] = useState(storedUser ? storedUser : null);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -42,21 +41,6 @@ export const UpdateForm = ({ user }) => {
         } else {
           alert("Something went wrong");
         }
-
-
-        // .then((response) => response.json())
-        //   .then((data) => {
-        //     console.log(data)
-        //     // setUpdatedUser(data.user);
-        //     // localStorage.setItem("user", JSON.stringify(data.user));
-        //   if (data.ok) {
-        //     console.log(response)
-        //     alert("Changes saved");
-        //     // updateUser(user);
-        //   } else {
-        //     alert("Something went wrong");
-        //   }
-        // });
       };
     
     

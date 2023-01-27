@@ -15,8 +15,6 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
   const [disableRemove, setDisableRemove] = useState(true)
   const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
 
-  // const movieRemoved = movieExists.false
-
 console.log(username)
 
 // AddFavMovie

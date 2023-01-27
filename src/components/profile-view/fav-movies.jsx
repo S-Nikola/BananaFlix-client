@@ -7,10 +7,8 @@ export const FavMovies = ({user, movies}) => {
     const storedToken = localStorage.getItem("token");
     const storedMovies = JSON.parse(localStorage.getItem("movies"))
     const storedUser = localStorage.getItem("user");
-    // const {Username, Birthday, Email, FavoriteMovies} = user;
+
     const [token] = useState(storedToken ? storedToken : null);
-    // const [userFavoriteMovies, setUserFavoriteMovies] = useState([]);
-    // const [updatedUser, setUpdatedUser] = useState(storedUser ? storedUser : null);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -41,6 +39,7 @@ const getUser = (token) => {
   const favMovies = movies.filter((movie) => favoriteMovies.includes(movie.id));
 
   console.log("favMovies", favMovies)
+
     //Filter favorite movies for later display
 useEffect (() => {
     const newList = allMovies.filter((movie)=> {
@@ -66,26 +65,5 @@ useEffect (() => {
      ))
    }
  </>
-
-
-//  <> 
-//     <h4>Favorite movies:</h4>
-//       {favoriteMovies.length === 0 ? (
-//         <span>No movies selected</span>) : (
-//         favoriteMovies.map ((movie) => (
-//           <Col className="mb-4" key={movie.id} xs={12} md={6} lg={3}>
-//             <Card className="h-100">
-//               <Card.Img variant="top" src={movie.image} />
-//               <Card.Body>
-//                 <Card.Title className="title">{movie.title}</Card.Title>
-//                   <Link className="open-button" to={`/movies/${encodeURIComponent(movie.id)}`}>
-//                     <Button variant="link">Open</Button>
-//                   </Link>
-//               </Card.Body>
-//             </Card> 
-//           </Col>
-//         ))
-//       )}
-//   </>
   )
 }

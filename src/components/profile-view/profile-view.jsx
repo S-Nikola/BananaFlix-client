@@ -9,10 +9,9 @@ export const ProfileView = ({ user, movies }) => {
     const storedToken = localStorage.getItem("token");
     const storedMovies = JSON.parse(localStorage.getItem("movies"))
     const storedUser = localStorage.getItem("user");
-    // const {Username, Birthday, Email, FavoriteMovies} = user;
+
+
     const [token] = useState(storedToken ? storedToken : null);
-    // const [userFavoriteMovies, setUserFavoriteMovies] = useState([]);
-    // const [updatedUser, setUpdatedUser] = useState(storedUser ? storedUser : null);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -41,12 +40,10 @@ const getUser = (token) => {
 }
 console.log("userFavMov", favoriteMovies)
 
-
 useEffect(()=> {
   getUser(token);
 },[])
 
-   
   return (
     <Container>
       <Row className= "mb-4">
