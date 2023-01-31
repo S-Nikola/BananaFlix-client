@@ -15,7 +15,6 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
   const [disableRemove, setDisableRemove] = useState(true)
   const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
 
-console.log(username)
 
 // AddFavMovie
 const addFavoriteMovie = async() => {
@@ -27,8 +26,6 @@ const addFavoriteMovie = async() => {
       "Content-Type": "application/json", 
       }
      })
-
-      console.log(storedToken)
 
     const response = await favoriteMovie.json()
     setUserFavoriteMovies(response.FavoriteMovies)
@@ -51,7 +48,6 @@ const addFavoriteMovie = async() => {
       }
     })     
     const response = await favoriteMovie.json()
-    console.log(response)
     if (response) {
       alert("Movie removed from favorites");
       localStorage.setItem("user", JSON.stringify (response))
@@ -63,8 +59,6 @@ const addFavoriteMovie = async() => {
 
     const movieAdded = () => {
       const hasMovie = userFavoriteMovies.some((m) => m === movieId)
-      console.log("userFavMov", userFavoriteMovies)
-      console.log("movieId", movieId)
       if (hasMovie) {
         setMovieExists(true)
       }
@@ -76,8 +70,6 @@ const addFavoriteMovie = async() => {
         setDisableRemove(false)
       }
     };
-
-console.log("movieExists", movieExists)
 
   useEffect (()=> {
     movieAdded()

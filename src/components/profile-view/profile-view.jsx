@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { MovieCard } from "../movie-card/movie-card";
 import { UpdateForm } from "./update-form";
 import { FavMovies } from "./fav-movies";
-import { Button, Container, Form, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 export const ProfileView = ({ user, movies }) => {
 
@@ -19,10 +18,6 @@ export const ProfileView = ({ user, movies }) => {
     const [birthday, setBirthday] = useState("");
     const [favoriteMovies, setFavoriteMovies] = useState([]);
 
-    const [allMovies] = useState(storedMovies ? storedMovies: movies);
-    const [filteredMovies, setFilteredMovies] = useState([]);
-
-
 // Show updated user on the profile
 const getUser = (token) => {
   fetch(`https://movie-api-8cvs.onrender.com/profiles/${user.Username}`,{
@@ -30,7 +25,6 @@ const getUser = (token) => {
     headers: { Authorization: `Bearer ${token}`},
   }).then(response => response.json())
   .then((response) => {
-    console.log("getUser response", response)
     setUsername(response.Username);
     setEmail(response.Email);
     setPassword(response.Password);
@@ -38,7 +32,6 @@ const getUser = (token) => {
     setFavoriteMovies(response.FavoriteMovies)
   })
 }
-console.log("userFavMov", favoriteMovies)
 
 useEffect(()=> {
   getUser(token);
