@@ -1,8 +1,11 @@
-// .open-button {
-//     text-decoration: none;
-//     color: var(--silver);
-//     background-color: var(--blue);
-//     padding: 4px;
-//     border-radius: 5px;
-//     transition: 0.2s opacity;
-//   }
+.open-button {
+    text-decoration: none;
+    color: var(--silver);
+    background-color: var(--blue);
+    padding: 4px;
+    border-radius: 5px;
+    transition: 0.2s opacity;
+  }
+  .open-button:hover {
+    opacity: 0.8;
+  }

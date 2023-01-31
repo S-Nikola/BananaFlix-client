@@ -97,21 +97,27 @@ console.log("movieExists", movieExists)
           <span className="label"><h5>Description: </h5></span>
           <span className="value">{movie.description}<br></br><br></br></span>
         </div>
+        <div className="movie-description">
+          <span className="label"><h5>Genre: {movie.genre.Name}</h5></span>
+          <span className="value">{movie.genre.Description}<br></br><br></br></span>
+        </div>
+        <div className="movie-description">
+          <span className="label"><h5>Director: {movie.director.Name}</h5></span>
+          <span className="value">Bio: {movie.director.Bio}<br></br>Birth: {movie.director.Birth}<br></br></span>
+        </div>
         <Link to={`/`}>
-          <Button className="back-button button-primary">Back</Button>
+          <Button className="back-button button-primary mt-2">Back</Button>
         </Link>
         <br />
-        <br />
         <Button 
-          className="button-add-favorite"
+          className="add-button mt-2"
           onClick={addFavoriteMovie}
           disabled={movieExists}
         >
           + Add to Favorites
         </Button>
         <br/>
-        <br/>
-        <Button 
+        <Button className="mt-2"
           variant="danger"
           onClick={removeFavoriteMovie}
           disabled={disableRemove}
