@@ -3,9 +3,10 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, searchInput }) => {
+
     return (
-      <Card className="h-100">
+      <Card className= "card h-100 hidden-card ">
       <Card.Img variant="top" src={movie.image} />
       <Card.Body>
         <Card.Title className="title">{movie.title}</Card.Title>

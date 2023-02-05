@@ -8,6 +8,7 @@ import { ProfileView } from "../profile-view/profile-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import "./main-view.scss"
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -15,7 +16,8 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(storedUser? storedUser : null);
   const [token, setToken] = useState(storedToken? storedToken : null);
-
+  const [searchInput, setSearchInput] = useState("");
+ 
   useEffect(() => {
     if (!token) {
     console.log("No token")
@@ -33,7 +35,14 @@ export const MainView = () => {
         setMovies(moviesFromApi);
         localStorage.setItem("movies", JSON.stringify(moviesFromApi))
       });
+      console.log("bilo sho")
   }, [token]);
+
+// Handle changes in the search input field
+   const handleSearchInput = (e) => {
+     setSearchInput(e.target.value);
+   };
+
 
   return (
     <BrowserRouter>
@@ -42,8 +51,10 @@ export const MainView = () => {
         onLoggedOut={() => {
           setUser(null);
           setToken(null);
+          setSearchInput("");
           localStorage.clear();
         }}
+        handleSearchInput={(e) => setSearchInput(e.target.value)}
       />
       <Row className="justify-content-md-center">
         <Routes>
@@ -116,7 +127,8 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} md={3}>
+                      <Col className={`${movie.title.toLowerCase().includes(searchInput.toLowerCase()) ? "" : "hidden-card"} mb-4`}
+                       key={movie.id} md={3}>
                         <MovieCard movie={movie} />
                       </Col>
                     ))}
