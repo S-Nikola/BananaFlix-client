@@ -6,15 +6,18 @@ import Container from "react-bootstrap/Container";
 // Import statement to indicate that you need to bundle `./index.scss`
 import "./index.scss";
 import { GlobalProvider } from './context/GlobalContext';
+import { BrowserRouter } from 'react-router-dom';
 
 // Main component (will eventually use all the others)
 const BananaFlixApplication = () => {
   return (
-    <GlobalProvider>
-      <Container>
-        <MainView />
-      </Container>
-    </GlobalProvider>
+    <BrowserRouter>
+      <GlobalProvider>
+        <Container>
+          <MainView />
+        </Container>
+      </GlobalProvider>
+    </BrowserRouter>
   );
 };
 

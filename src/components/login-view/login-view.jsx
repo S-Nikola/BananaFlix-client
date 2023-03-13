@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useLoginUserRequest } from "../../requests/user.request";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { Navigate } from "react-router-dom";
 
 export const LoginView = () => {
   const {
@@ -15,7 +16,7 @@ export const LoginView = () => {
 
   // if user exits redirect to main view
   if (user) {
-    return <Navigate to="/" replace={true} />
+    return <Navigate to="/" />;
   }
 
   // Convert the handleSubmit function to an async function

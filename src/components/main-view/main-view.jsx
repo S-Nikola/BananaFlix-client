@@ -49,7 +49,7 @@ export const MainView = () => {
 
 
   return (
-    <BrowserRouter>
+    <>
       <NavigationBar
         user={user}
         onLoggedOut={() => {
@@ -63,35 +63,29 @@ export const MainView = () => {
       <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path= "/signup"
+            path="/signup"
             element={
               <>
-              {user ? (
-                <Navigate to="/" />
-              ) : (
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
                   <Col md={5}>
                     <SignupView />
                   </Col>
-              )}
+                )}
               </>
             }
           />
           <Route
-            path= "/login"
+            path="/login"
             element={
-              <>
-              {user ? (
-                <Navigate to="/" />
-              ) : (
-                  <Col md={5}>
-                    <LoginView onLoggedIn={(user) => setUser(user)} />
-                  </Col>
-              )}
-              </>
+              <Col md={5}>
+                <LoginView onLoggedIn={(user) => setUser(user)} />
+              </Col>
             }
           />
           <Route
-            path= "/movies/:movieId"
+            path="/movies/:movieId"
             element={
               <>
                 {!user ? (
@@ -100,7 +94,11 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} username={user.Username} favoriteMovies={user.FavoriteMovies}/>
+                    <MovieView
+                      movies={movies}
+                      username={user.Username}
+                      favoriteMovies={user.FavoriteMovies}
+                    />
                   </Col>
                 )}
               </>
@@ -114,7 +112,7 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col>
-                    <ProfileView user={user} movies={movies}/>
+                    <ProfileView user={user} movies={movies} />
                   </Col>
                 )}
               </>
@@ -131,8 +129,17 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className={`${movie.title.toLowerCase().includes(searchInput.toLowerCase()) ? "" : "hidden-card"} mb-4`}
-                       key={movie.id} md={3}>
+                      <Col
+                        className={`${
+                          movie.title
+                            .toLowerCase()
+                            .includes(searchInput.toLowerCase())
+                            ? ""
+                            : "hidden-card"
+                        } mb-4`}
+                        key={movie.id}
+                        md={3}
+                      >
                         <MovieCard movie={movie} />
                       </Col>
                     ))}
@@ -143,6 +150,6 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
-    </BrowserRouter>
+    </>
   );
 };
