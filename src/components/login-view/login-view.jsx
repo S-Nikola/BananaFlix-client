@@ -1,41 +1,42 @@
 import { useState } from "react";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useLoginUserRequest } from "../../requests/user.request";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  // Convert the handleSubmit function to an async function
+  const handleSubmit = async (event) => {
     // this prevents the default behavior of the form which is to reload the entire page
     event.preventDefault();
 
     const data = {
       access: username,
-      secret: password
+      secret: password,
     };
 
-    fetch(`https://movie-api-8cvs.onrender.com/login?Username=${username}&Password=${password}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Login response: ", data);
-      if (data.user) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("token", data.token);
-        onLoggedIn(data.user, data.token);
+    try {
+      // Call the loginUser function and wait for it to resolve
+      const loginResponse = await useLoginUserRequest(data);
+
+      // Log the response to the console
+      console.log("Login response: ", loginResponse);
+
+      if (loginResponse.user) {
+        // If a user object is returned, set the user and token in local storage and call onLoggedIn
+        localStorage.setItem("user", JSON.stringify(loginResponse.user));
+        localStorage.setItem("token", loginResponse.token);
+        onLoggedIn(loginResponse.user, loginResponse.token);
       } else {
+        // If no user object is returned, show an alert
         alert("No such user");
       }
-    })
-    .catch((e) => {
+    } catch (error) {
+      // If an error occurs, show an alert
       alert("Something went wrong");
-    });
+    }
   };
 
   return (
@@ -60,8 +61,8 @@ export const LoginView = ({ onLoggedIn }) => {
           required
         />
       </Form.Group>
-      <Button className= "mt-3" variant="primary" type="submit">
-      Log In
+      <Button className="mt-3" variant="primary" type="submit">
+        Log In
       </Button>
     </Form>
   );
