@@ -9,8 +9,12 @@ export const useGlobalContext = () => useContext(globalContext);
 
 // create provider
 export const GlobalProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [token, setToken] = useState(null);
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+
+    const [user, setUser] = useState(storedUser || null);
+    const [token, setToken] = useState(storedToken || null);
 
     return (
         <globalContext.Provider value={

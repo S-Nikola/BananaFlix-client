@@ -5,14 +5,17 @@ import Container from "react-bootstrap/Container";
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import "./index.scss";
+import { GlobalProvider } from './context/GlobalContext';
 
 // Main component (will eventually use all the others)
 const BananaFlixApplication = () => {
   return (
-    <Container>
-      <MainView />
-    </Container>
-  )
+    <GlobalProvider>
+      <Container>
+        <MainView />
+      </Container>
+    </GlobalProvider>
+  );
 };
 
 // Finds the root of your app

@@ -9,15 +9,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./main-view.scss"
+import { useGlobalContext } from "../../context/GlobalContext";
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
+  const {
+    user,
+    setUser,
+    token,
+    setToken
+  } = useGlobalContext();
+
   const [movies, setMovies] = useState([]);
-  const [user, setUser] = useState(storedUser? storedUser : null);
-  const [token, setToken] = useState(storedToken? storedToken : null);
   const [searchInput, setSearchInput] = useState("");
- 
+
   useEffect(() => {
     if (!token) {
     console.log("No token")
@@ -33,7 +37,7 @@ export const MainView = () => {
           return obj;
         });
         setMovies(moviesFromApi);
-        localStorage.setItem("movies", JSON.stringify(moviesFromApi))
+        // localStorage.setItem("movies", JSON.stringify(moviesFromApi))
       });
       console.log("bilo sho")
   }, [token]);
@@ -58,7 +62,7 @@ export const MainView = () => {
       />
       <Row className="justify-content-md-center">
         <Routes>
-          <Route 
+          <Route
             path= "/signup"
             element={
               <>
@@ -72,7 +76,7 @@ export const MainView = () => {
               </>
             }
           />
-          <Route 
+          <Route
             path= "/login"
             element={
               <>
@@ -86,7 +90,7 @@ export const MainView = () => {
               </>
             }
           />
-          <Route 
+          <Route
             path= "/movies/:movieId"
             element={
               <>

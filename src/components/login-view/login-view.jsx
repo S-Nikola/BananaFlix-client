@@ -2,10 +2,21 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useLoginUserRequest } from "../../requests/user.request";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-export const LoginView = ({ onLoggedIn }) => {
+export const LoginView = () => {
+  const {
+    user,
+    setUser,
+  } = useGlobalContext()
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // if user exits redirect to main view
+  if (user) {
+    return <Navigate to="/" replace={true} />
+  }
 
   // Convert the handleSubmit function to an async function
   const handleSubmit = async (event) => {
@@ -28,7 +39,9 @@ export const LoginView = ({ onLoggedIn }) => {
         // If a user object is returned, set the user and token in local storage and call onLoggedIn
         localStorage.setItem("user", JSON.stringify(loginResponse.user));
         localStorage.setItem("token", loginResponse.token);
-        onLoggedIn(loginResponse.user, loginResponse.token);
+
+        // Set the user and token in the state
+        setUser(loginResponse.user);
       } else {
         // If no user object is returned, show an alert
         alert("No such user");
