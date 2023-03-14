@@ -27,10 +27,7 @@
 - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
-- [⭐️ Show your support](#support)
 - [🙏 Acknowledgements](#acknowledgements)
-- [❓ FAQ (OPTIONAL)](#faq)
-- [📝 License](#license)
 
 <!-- PROJECT DESCRIPTION -->
 
@@ -128,7 +125,7 @@ parcel build src/index.html --public-url /
 
 <!-- AUTHORS -->
 
-## 👥 Authors <a name="authors"></a>
+## 👥 Author<a name="authors"></a>
 
 👤 **Nikola Stefanovski**
 
