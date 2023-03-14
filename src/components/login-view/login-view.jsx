@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import logo from "../../img/BananaFlix.png"
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -39,6 +40,10 @@ export const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
+    <>
+    <div align="center">
+      <img src={logo} alt="logo" width="400"  height="auto" /> 
+    </div>
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="LoginformUsername">
         <Form.Label>Username:</Form.Label>
@@ -64,5 +69,6 @@ export const LoginView = ({ onLoggedIn }) => {
       Log In
       </Button>
     </Form>
+    </>
   );
 };
