@@ -6,6 +6,7 @@ import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { fetchMovies } from "../../context/GlobalContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -16,30 +17,20 @@ export const MainView = () => {
     user,
     setUser,
     token,
-    setToken
+    setToken,
+    movies,
+    setMovies,
+    fetchMovies
   } = useGlobalContext();
   
-  const [movies, setMovies] = useState([]);
   const [searchInput, setSearchInput] = useState("");
  
   useEffect(() => {
     if (!token) {
-    console.log("No token")
-    return;
+      console.log("No token");
+      return;
     }
-
-    fetch("https://movie-api-8cvs.onrender.com/movies", {
-      headers: { Authorization: `Bearer ${token}` }
-    }).then((response) => response.json())
-      .then((data) => {
-        const moviesFromApi = data.map(movie => {
-          const obj = { id: movie._id, title: movie.Title, description: movie.Description, image: movie.ImageURL, genre: movie.Genre, director: movie.Director}
-          return obj;
-        });
-        setMovies(moviesFromApi);
-        //localStorage.setItem("movies", JSON.stringify(moviesFromApi))
-      });
-      console.log("bilo sho")
+    fetchMovies()
   }, [token]);
 
 // Handle changes in the search input field

@@ -19,3 +19,21 @@ export const useLoginUserRequest = async (data) => {
     throw new Error(error);
   }
 };
+
+// export const fetchMovies = async () => {
+//   await fetch("https://movie-api-8cvs.onrender.com/movies", {
+//     //headers: { Authorization: `Bearer ${token}` },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const moviesFromApi = data.map((movie) => ({
+//         id: movie._id,
+//         title: movie.Title,
+//         description: movie.Description,
+//         image: movie.ImageURL,
+//         genre: movie.Genre,
+//         director: movie.Director,
+//       }));
+//       setMovies(moviesFromApi);
+//     });
+// };

@@ -15,6 +15,31 @@ export const GlobalProvider = ({ children }) => {
 
     const [user, setUser] = useState(storedUser || null);
     const [token, setToken] = useState(storedToken || null);
+    const [movies, setMovies] = useState([]);
+
+    const fetchMovies = () => {
+        if (!token) {
+          console.log("No token");
+          return;
+        }
+    
+        fetch("https://movie-api-8cvs.onrender.com/movies", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const moviesFromApi = data.map((movie) => ({
+              id: movie._id,
+              title: movie.Title,
+              description: movie.Description,
+              image: movie.ImageURL,
+              genre: movie.Genre,
+              director: movie.Director,
+            }));
+            setMovies(moviesFromApi);
+            //localStorage.setItem("movies", JSON.stringify(moviesFromApi))
+          });
+      };
 
     return (
         <globalContext.Provider value={
@@ -22,7 +47,10 @@ export const GlobalProvider = ({ children }) => {
                 user,
                 setUser,
                 token,
-                setToken
+                setToken,
+                movies,
+                setMovies,
+                fetchMovies
             }
         }>
         {children}
