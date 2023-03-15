@@ -5,17 +5,21 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
+import { useGlobalContext } from "../../context/GlobalContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./main-view.scss"
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
+  const {
+    user,
+    setUser,
+    token,
+    setToken
+  } = useGlobalContext();
+  
   const [movies, setMovies] = useState([]);
-  const [user, setUser] = useState(storedUser? storedUser : null);
-  const [token, setToken] = useState(storedToken? storedToken : null);
   const [searchInput, setSearchInput] = useState("");
  
   useEffect(() => {
@@ -33,7 +37,7 @@ export const MainView = () => {
           return obj;
         });
         setMovies(moviesFromApi);
-        localStorage.setItem("movies", JSON.stringify(moviesFromApi))
+        //localStorage.setItem("movies", JSON.stringify(moviesFromApi))
       });
       console.log("bilo sho")
   }, [token]);
@@ -45,7 +49,7 @@ export const MainView = () => {
 
 
   return (
-    <BrowserRouter>
+    <>
       <NavigationBar
         user={user}
         onLoggedOut={() => {
@@ -58,36 +62,30 @@ export const MainView = () => {
       />
       <Row className="justify-content-md-center">
         <Routes>
-          <Route 
-            path= "/signup"
+          <Route
+            path="/signup"
             element={
               <>
-              {user ? (
-                <Navigate to="/" />
-              ) : (
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
                   <Col md={5}>
                     <SignupView />
                   </Col>
-              )}
+                )}
               </>
             }
           />
-          <Route 
-            path= "/login"
+          <Route
+            path="/login"
             element={
-              <>
-              {user ? (
-                <Navigate to="/" />
-              ) : (
-                  <Col md={5}>
-                    <LoginView onLoggedIn={(user) => setUser(user)} />
-                  </Col>
-              )}
-              </>
+              <Col md={5}>
+                <LoginView onLoggedIn={(user) => setUser(user)} />
+              </Col>
             }
           />
-          <Route 
-            path= "/movies/:movieId"
+          <Route
+            path="/movies/:movieId"
             element={
               <>
                 {!user ? (
@@ -96,7 +94,11 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} username={user.Username} favoriteMovies={user.FavoriteMovies}/>
+                    <MovieView 
+                      movies={movies} 
+                      username={user.Username} 
+                      favoriteMovies={user.FavoriteMovies}
+                    />
                   </Col>
                 )}
               </>
@@ -110,7 +112,7 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col>
-                    <ProfileView user={user} movies={movies}/>
+                    <ProfileView user={user} movies={movies} />
                   </Col>
                 )}
               </>
@@ -127,8 +129,17 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className={`${movie.title.toLowerCase().includes(searchInput.toLowerCase()) ? "" : "hidden-card"} mb-4`}
-                       key={movie.id} md={3}>
+                      <Col 
+                      className={`${
+                        movie.title
+                          .toLowerCase()
+                          .includes(searchInput.toLowerCase()) 
+                          ? ""
+                          : "hidden-card"
+                        } mb-4`}
+                        key={movie.id} 
+                        md={3}
+                      >
                         <MovieCard movie={movie} />
                       </Col>
                     ))}
@@ -139,6 +150,6 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
-    </BrowserRouter>
+    </>
   );
 };
