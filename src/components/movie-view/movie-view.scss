@@ -9,3 +9,11 @@
   .add-button:hover{
     opacity: 0.8;
   }
+
+  .movie-img{
+    width: 350px
+  }
+  .movie-view{
+    display: flex;
+    flex-direction: row-reverse;
+  }
