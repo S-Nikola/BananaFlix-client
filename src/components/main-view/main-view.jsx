@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -6,7 +7,7 @@ import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import { useGlobalContext } from "../../context/GlobalContext";
-import { fetchMovies } from "../../context/GlobalContext";
+import { fetchMovies } from "../../requests/movie.request";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -20,24 +21,31 @@ export const MainView = () => {
     setToken,
     movies,
     setMovies,
-    fetchMovies
   } = useGlobalContext();
   
   const [searchInput, setSearchInput] = useState("");
- 
+  const { movieId } = useParams();
+
   useEffect(() => {
     if (!token) {
       console.log("No token");
       return;
     }
-    fetchMovies()
-  }, [token]);
-
+  
+    const fetchData = async () => {
+      const fetchedMovies = await fetchMovies(token);
+      if (fetchedMovies != null) {
+        setMovies(fetchedMovies);
+      }
+    };
+  
+    fetchData();
+  }, [token, setMovies, setUser]);
+  
 // Handle changes in the search input field
    const handleSearchInput = (e) => {
      setSearchInput(e.target.value);
    };
-
 
   return (
     <>
