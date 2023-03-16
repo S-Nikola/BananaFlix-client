@@ -22,3 +22,14 @@
   .hidden-card {
     display: none
   }
+
+  .fav-button{
+    margin-left: 5px;
+    border-radius: 50%;
+  }
+  .fav-button:hover{
+    opacity: 0.8;
+  }
+  .card-buttons{
+    display: flex;
+  }
