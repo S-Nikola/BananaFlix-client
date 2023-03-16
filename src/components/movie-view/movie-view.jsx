@@ -5,7 +5,14 @@ import { useState, useEffect } from "react";
 import { useGlobalContext } from "../../context/GlobalContext";
 import "./movie-view.scss";
 
-export const MovieView = ({ movies }) => {
+export const MovieView = () => {
+  const {
+    user,
+    setUser,
+    movies,
+    setMovies
+  } = useGlobalContext()
+
   const { movieId } = useParams();
 
   const storedToken = localStorage.getItem("token");
@@ -14,12 +21,7 @@ export const MovieView = ({ movies }) => {
   const movie = movies.find((m) => m.id === movieId);
 
   const [addFavDisabled, setAddFavDisabled] = useState(false);
-  const [removeFavDisabled, setRemoveFavDisabled] = useState(true)
-
-  const {
-    user,
-    setUser
-  } = useGlobalContext()
+  const [removeFavDisabled, setRemoveFavDisabled] = useState(true);
 
   // Set inital state of buttons based on whether a movie is favorited
   const movieAdded = () => {

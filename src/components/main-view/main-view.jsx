@@ -94,9 +94,9 @@ export const MainView = () => {
                 ) : (
                   <Col md={8}>
                     <MovieView 
-                      movies={movies} 
-                      username={user.Username} 
-                      favoriteMovies={user.FavoriteMovies}
+                      // movies={movies} 
+                      // username={user.Username} 
+                      // favoriteMovies={user.FavoriteMovies}
                     />
                   </Col>
                 )}
@@ -111,7 +111,10 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col>
-                    <ProfileView user={user} movies={movies} />
+                    <ProfileView 
+                    // user={user} 
+                    // movies={movies} 
+                    />
                   </Col>
                 )}
               </>
@@ -139,7 +142,8 @@ export const MainView = () => {
                         key={movie.id} 
                         md={3}
                       >
-                        <MovieCard movie={movie} />
+                        <MovieCard movie={movie} 
+                        />
                       </Col>
                     ))}
                   </>

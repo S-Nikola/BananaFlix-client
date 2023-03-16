@@ -86,18 +86,20 @@ export const MovieCard = ({ movie }) => {
       <Card.Img variant="top" src={movie.image} id="movie-poster"/>
       <Card.Body id="card-body">
         <Card.Title className="title">{movie.title}</Card.Title>
-        <div className="card-buttons">
+        <div id="card-buttons">
           <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-            <Button className="open-button" >Open</Button>
+            <Button className="open-button" >See details</Button>
           </Link>
           <Button 
             className="fav-button"
+            variant="primary"
             onClick={addFavoriteMovie}
             disabled={addFavDisabled}
           >
             +
           </Button>
-          <Button className="fav-button"
+          <Button 
+            className="fav-button"
             variant="danger"
             onClick={removeFavoriteMovie}
             disabled={removeFavDisabled}

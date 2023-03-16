@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 import { UpdateForm } from "./update-form";
 import { FavMovies } from "./fav-movies";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-export const ProfileView = ({ user, movies }) => {
+export const ProfileView = () => {
+  const {
+    user,
+    setUser,
+    movies,
+    setMovies
+  } = useGlobalContext()
 
     const storedToken = localStorage.getItem("token");
-    const storedMovies = JSON.parse(localStorage.getItem("movies"))
-    const storedUser = localStorage.getItem("user");
-
+    // const storedMovies = JSON.parse(localStorage.getItem("movies"))
+    // const storedUser = localStorage.getItem("user");
 
     const [token] = useState(storedToken ? storedToken : null);
 
@@ -16,7 +22,7 @@ export const ProfileView = ({ user, movies }) => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [birthday, setBirthday] = useState("");
-    const [favoriteMovies, setFavoriteMovies] = useState([]);
+    // const [favoriteMovies, setFavoriteMovies] = useState([]);
 
 // Show updated user on the profile
 const getUser = (token) => {
@@ -29,7 +35,7 @@ const getUser = (token) => {
     setEmail(response.Email);
     setPassword(response.Password);
     setBirthday(response.Birthday);
-    setFavoriteMovies(response.FavoriteMovies)
+    // setFavoriteMovies(response.FavoriteMovies)
   })
 }
 
@@ -55,13 +61,18 @@ useEffect(()=> {
         <Col >
         <Card>
           <Card.Body>
-            <UpdateForm user={user}/>
+            <UpdateForm 
+            user={user}
+            />
           </Card.Body>
         </Card>
         </Col>
       </Row>
       <Row>
-        <FavMovies user={user} movies={movies}/>
+        <FavMovies 
+        // user={user} 
+        // movies={movies}
+        />
         </Row>
     </Container>
   )
