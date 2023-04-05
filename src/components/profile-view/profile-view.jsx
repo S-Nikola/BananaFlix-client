@@ -44,15 +44,15 @@ useEffect(()=> {
 },[])
 
   return (
-    <Container>
-      <Row className= "mb-4">
+    <Container className="p-0">
+      <Row  className= "mb-4" >
         <Col>
-          <Card>
+          <Card className= "mb-4">
             <Card.Body>
               <div>
                 <h4>User Details</h4>
                 <p>Username: {username}</p>
-                <p>Birthday: {birthday}</p>
+                <p>Birthday: {birthday.slice(0, 10)}</p>
                 <p>Email: {email}</p>
               </div> 
             </Card.Body>
@@ -69,11 +69,8 @@ useEffect(()=> {
         </Col>
       </Row>
       <Row>
-        <FavMovies 
-        // user={user} 
-        // movies={movies}
-        />
-        </Row>
+        <FavMovies/>
+      </Row>
     </Container>
   )
 };

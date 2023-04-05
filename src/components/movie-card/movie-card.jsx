@@ -88,7 +88,7 @@ export const MovieCard = ({ movie }) => {
         <Card.Title className="title">{movie.title}</Card.Title>
         <div id="card-buttons">
           <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-            <Button className="open-button" >See details</Button>
+            <Button className="open-button" bg="secondary">See Details</Button>
           </Link>
           <Button 
             className="fav-button"

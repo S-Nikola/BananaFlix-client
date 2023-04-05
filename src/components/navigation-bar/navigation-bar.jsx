@@ -1,36 +1,37 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
+import "./navigation-bar.scss"
 
 export const NavigationBar = ({ user, onLoggedOut, handleSearchInput }) => {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar id="navbar" bg="primary" mb="2" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand className="text-white" as={Link} to="/">
           BananaFlix App
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" id="hamburger"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {!user && (
               <>
-                <Nav.Link as={Link} to="/login">
+                <Nav.Link className="text-white" as={Link} to="/login">
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/signup">
+                <Nav.Link className="text-white" as={Link} to="/signup">
                   Signup
                 </Nav.Link>
               </>
             )}
             {user && (
               <>
-                <Nav.Link as={Link} to="/">
+                <Nav.Link className="text-white" as={Link} to="/">
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to="/profile">
+                <Nav.Link className="text-white" as={Link} to="/profile">
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                <Nav.Link className="text-white" onClick={onLoggedOut}>Logout</Nav.Link>
               </>
             )}
           </Nav>
@@ -42,7 +43,7 @@ export const NavigationBar = ({ user, onLoggedOut, handleSearchInput }) => {
                 id="search-bar"
                 type="text"
                 placeholder="Search by title"
-                className="mr-sm-2 mx-2 orange-border"
+                className="mr-sm-2 orange-border"
                 onChange={handleSearchInput}
               />
             </Form>

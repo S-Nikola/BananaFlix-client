@@ -83,7 +83,8 @@ export const MovieView = () => {
     return (
       <Row className="movie-view">
       <Col md={6} className="movie-poster"  >
-        <img 
+        <img
+        width="100%"
         className="movie-img" 
         // crossOrigin="anonymous"
         src={movie.image} />

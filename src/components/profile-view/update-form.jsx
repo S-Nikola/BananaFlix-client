@@ -72,7 +72,8 @@ export const UpdateForm = ({ user }) => {
             <Form.Control
               type="username" 
               value={username} 
-              onChange={e => setUsername(e.target.value)} 
+              onChange={e => setUsername(e.target.value)}
+              required 
             />
           </Form.Group>
           <Form.Group>
@@ -80,7 +81,8 @@ export const UpdateForm = ({ user }) => {
             <Form.Control 
               type="password" 
               value={password} 
-              onChange={e => setPassword(e.target.value)} 
+              onChange={e => setPassword(e.target.value)}
+              required 
           />
           </Form.Group>
           <Form.Group>
@@ -88,7 +90,8 @@ export const UpdateForm = ({ user }) => {
             <Form.Control 
               type="text"
               value={email} 
-              onChange={e => setEmail(e.target.value)} 
+              onChange={e => setEmail(e.target.value)}
+              required 
             />
           </Form.Group>
           <Form.Group>

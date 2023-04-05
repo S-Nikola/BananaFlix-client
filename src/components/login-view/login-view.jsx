@@ -56,7 +56,7 @@ export const LoginView = () => {
   return (
     <>
     <div align="center">
-      <img src={logo} alt="logo" width="400"  height="auto" /> 
+      <img src={logo} alt="logo" width="100%"  height="auto" /> 
     </div>
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="LoginformUsername">
