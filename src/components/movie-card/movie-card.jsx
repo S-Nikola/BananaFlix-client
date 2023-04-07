@@ -92,7 +92,7 @@ export const MovieCard = ({ movie }) => {
           </Link>
           <Button 
             className="fav-button"
-            variant="primary"
+            variant="info"
             onClick={addFavoriteMovie}
             disabled={addFavDisabled}
           >

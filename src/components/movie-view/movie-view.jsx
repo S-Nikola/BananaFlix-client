@@ -111,6 +111,7 @@ export const MovieView = () => {
         <br />
         <Button 
           className="add-button mt-2"
+          variant="info"
           onClick={addFavoriteMovie}
           disabled={addFavDisabled}
         >

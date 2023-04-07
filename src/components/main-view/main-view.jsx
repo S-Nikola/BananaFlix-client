@@ -59,7 +59,7 @@ export const MainView = () => {
         }}
         handleSearchInput={(e) => setSearchInput(e.target.value)}
       />
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-center main-view">
         <Routes>
           <Route
             path="/signup"
@@ -93,11 +93,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView 
-                      // movies={movies} 
-                      // username={user.Username} 
-                      // favoriteMovies={user.FavoriteMovies}
-                    />
+                    <MovieView/>
                   </Col>
                 )}
               </>
@@ -111,10 +107,7 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col>
-                    <ProfileView 
-                    // user={user} 
-                    // movies={movies} 
-                    />
+                    <ProfileView/>
                   </Col>
                 )}
               </>
@@ -131,7 +124,7 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col 
+                      <Col id="movie-card"
                       className={`${
                         movie.title
                           .toLowerCase()
