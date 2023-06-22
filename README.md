@@ -4,7 +4,7 @@
   <img src="./src/img/BananaFlix.png" alt="logo" width="140"  height="auto" />
   <br/>
 
-  <h3><b>BananaFlix-React-client README Template</b></h3>
+  <h3><b>BananaFlix-React-client</b></h3>
 
 </div>
 
